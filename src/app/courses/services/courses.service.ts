@@ -44,7 +44,6 @@ export class CoursesService {
         return this.http.get('/api/lessons', {
             params: new HttpParams()
                 .set('courseId', courseId.toString())
-                .set('filter', '')
                 .set('sortOrder', 'asc')
                 .set('pageNumber', pageNumber.toString())
                 .set('pageSize', pageSize.toString())

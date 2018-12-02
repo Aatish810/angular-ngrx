@@ -1,4 +1,3 @@
-import { AppState } from './../../reducers/index';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -8,7 +7,8 @@ import {AuthService} from "../auth.service";
 import {tap} from "rxjs/operators";
 import {noop} from "rxjs";
 import {Router} from "@angular/router";
-import { Login } from '../auth.actions';
+import {AppState} from '../../reducers';
+import {Login} from '../auth.actions';
 
 @Component({
   selector: 'login',
@@ -37,18 +37,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     const val = this.form.value;
+
     this.auth.login(val.email, val.password)
-    .pipe(
-      tap(user => {
-        this.store.dispatch(new Login({user}))
-        this.router.navigateByUrl('/courses')
-      })
-    )
-    .subscribe(
-      noop,
-      () =>  alert('Not Valid login')
-    )
+      .pipe(
+        tap(user => {
+
+          this.store.dispatch(new Login({user}));
+
+          this.router.navigateByUrl('/courses');
+
+        })
+      )
+      .subscribe(
+        noop,
+        () => alert('Login Failed')
+      );
+
+
   }
 
 
